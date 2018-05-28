@@ -7,16 +7,20 @@ import time
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
+#Startup Log
 @client.event
 async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
+    print(f"{client.user.name} is online and running")
     print('------')
+    print("Error Log:")
+    #Set the 'playing' status as the set string
+    await client.change_presence(game=discord.Game(name='Doki Doki Literature Club'))
 
+#Client event
 @client.event
 async def on_message(message):
-    if message.content.startswith('!penis'):
-         await client.send_message(message.channel, "lol Benis XD")
+    if message.content.lower().startswith('!alive?'):#The message is transformed into lowercase characters
+         await client.send_message(message.channel, "Yes, im alive")
 
-client.run('Insert Token Here')
+#Bot token goes here
+client.run('')
