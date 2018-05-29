@@ -5,48 +5,42 @@ import Token #imports Token.py which holds the bot token
 import asyncio
 import time
 
-#Declare variables
-sendMessage = BotClient.send_message()
-messageStarts = message.content.lower().startswith()
-githubLink = "https://github.com/Jmaonri/Felix"
-twitchLink = 'https://www.twitch.tv/thelittledude_ld'
-Streaming = 1
 Client = discord.Client()
-botClient = commands.Bot(command_prefix = "!")
-sendCommands = "```\nHere are all the commands:\n\n!github - Link to the github of Felix Bot\n!alive? - Checking for my pulse I see...\n!gay - Use at your own risk... \n!nut - Pretty self explanatory```"
+client = commands.Bot(command_prefix = "!")
 
-imageList = [0, 1]
-imageList[0] = "https://myanimelist.cdn-dena.com/images/characters/5/353573.jpg" #despacito
-imageList[1] = "https://www.dailydot.com/wp-content/uploads/228/6f/ab64a69d4cd848bad23ed0f9190a91eb.jpg"
+felixPics = [0, 1]
+felixPics[0] = "https://myanimelist.cdn-dena.com/images/characters/5/353573.jpg"
+felixPics[1] = "https://www.dailydot.com/wp-content/uploads/228/6f/ab64a69d4cd848bad23ed0f9190a91eb.jpg"
 
 #Startup Log
 @client.event
 async def on_ready():
-    print(f"{botClient.user.name} is online and running")
+    print(f"{client.user.name} is online and running")
     print('------')
     print("Log:\n")
     #Set the 'playing' status as the set string
-    await botClient.change_presence(game=discord.Game(name='!commands | !github',  type = Streaming, url = twitchLink))
+    await client.change_presence(game=discord.Game(name='!commands | !github',  type = 1, url = 'https://www.twitch.tv/thelittledude_ld'))
 
 @client.event
 async def on_message(message):
-    if messageStarts('!commands'):
+    if message.content.lower().startswith('!commands'):
         print("!commands command called")
-        await sendMessage(message.channel, sendCommands)
-    elif messageStarts('!github'):
+        await client.send_message(message.channel, "```\nHere are all the commands:\n\n*Not available\n\n!github - Link to the github of Felix Bot\n!alive? - Checking for my pulse I see...\n!gay - Use at your own risk... \n*!image 'search' - Searches Google images```")
+    elif message.content.lower().startswith('!github'):
         print("!github command called")
-        await sendMessage(message.channel, githubLink)
-    elif messageStarts('!alive?'):#The message is transformed into lowercase characters
+        await client.send_message(message.channel, "https://github.com/Jmaonri/Felix")
+    elif message.content.lower().startswith('!alive?'):#The message is transformed into lowercase characters
         print("!alive? command called")
-        await sendMessage(message.channel, "Yes, im alive")
-    elif messageStarts('!nut'):
+        await client.send_message(message.channel, "Yes, im alive")
+    elif message.content.lower().startswith('!nut'):
         print("!nut command called")
-        await sendMessage(message.channel, "https://www.dailydot.com/wp-content/uploads/228/6f/ab64a69d4cd848bad23ed0f9190a91eb.jpg")
-    elif messageStarts('!gay'):
+        await client.send_message(message.channel, "https://www.dailydot.com/wp-content/uploads/228/6f/ab64a69d4cd848bad23ed0f9190a91eb.jpg")
+    elif message.content.lower().startswith('!gay'):
         #AFTER ONE FUCKING HOUR THIS FINALLY WORKS, DONT TOUCH THIS SHIT EVER AGAIN (nvm I broke my rule but I made it better)
         print("!gay command called")
-        embed.set_image(url = imageList[0])
-        await sendMessage(message.author, discord.Embed(title = "No u faggot"))
+        embed = discord.Embed(title = "No u faggot")
+        embed.set_image(url = felixPics[0])
+        await client.send_message(message.author, embed = embed)
 
 #Bot token goes here
-botClient.run(Token.token) #Opens Token.py and draws the token variable "botClient.run(file name, variable in file)"
+client.run(Token.token) #Opens Token.py and draws the token variable "client.run(file name, variable in file)"
